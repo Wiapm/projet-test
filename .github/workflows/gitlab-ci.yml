@@ -3,7 +3,7 @@ name: Python_Django application
 on:
   push:
     branches:
-      - main  # You can modify this to match the branch you want to trigger the workflow for
+      - main  
 
 jobs:
   build:
