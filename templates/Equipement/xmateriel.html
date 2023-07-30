@@ -1,0 +1,195 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<!-- Inclure les liens vers les fichiers CSS de Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<!-- Filtre par catégorie -->
+<div class="container">
+    <label for="categorie">Filtrer par catégorie :</label>
+    <select id="categorie">
+        <option value="">Toutes</option>
+        <option value="Chimie">Chimie</option>
+        <option value="Biologie">Biologie</option>
+        <option value="Microbiologie">Microbiologie</option>
+        <option value="Biotechnologie">Biotechnologie</option>
+        <option value="Autre">Autre</option>
+    </select>
+</div>
+<div class="container">
+    <label for="marque">Filtrer par marque :</label>
+    <select id="marque">
+        <option value="">Toutes</option>
+        {% for marque in marques_distinctes %}
+            <option value="{{ marque }}">{{ marque }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+
+<!-- Tableau des équipements -->
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Référence</th>
+                <th>État</th>
+                <th>Date d'acquisition</th>
+                <th>Marque</th>
+                <th>Catégorie</th> <!-- Modifier le titre de la colonne -->
+                <th>Laboratoire</th>
+                <th>Supprimer</th>
+                <th>Modifier</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipement in equipements %}
+            <tr data-categorie="{{ equipement.Categorie }}" data-marque="{{ equipement.Marque }}">
+                <td>{{ equipement.Reference }}</td>
+                <td>
+                    {% if equipement.Etat == 'en panne' %}
+                        <span style="color: red;"><i class="fas fa-exclamation-circle"></i> En panne</span>
+                    {% elif equipement.Etat == 'Fonctionnel' %}
+                        <span style="color: green;"><i class="fas fa-check-circle"></i> Fonctionnel</span>
+                    {% elif equipement.Etat == 'Installé' %}
+                        <span style="color: blue;"><i class="fas fa-cogs"></i> Installé</span>
+                    {% endif %}
+                </td>
+                <td>{{ equipement.Date_Acquisition }}</td>
+                <td>{{ equipement.Marque }}</td>
+                <td>{{ equipement.Categorie }}</td>
+                {% for categorie in categories %}
+                <button class="filter-btn {% if selected_category == categorie %}active-filter{% endif %}">{{ categorie }}</button>
+                {% endfor %}
+                <td>{{ equipement.Laboratoire }}</td>
+                <td>
+                    <a href="{% url 'supprimer_equipement' equipement.Reference %}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </td>
+                <td>
+                    <a href="{% url 'modifier_etat' equipement.id %}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Bouton pour ajouter un nouvel équipement -->
+    <a href="{% url 'ajouter_equipement' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Ajouter un nouvel équipement</a>
+</div>
+
+<!-- Inclure les liens vers les fichiers JavaScript de Font Awesome -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+<script>
+    // Fonction pour filtrer les équipements en fonction de la catégorie et de la marque sélectionnées
+    function filtrerEquipements() {
+        const selectCategorie = document.getElementById('categorie');
+        const selectedCategorie = selectCategorie.value;
+
+        const selectMarque = document.getElementById('marque');
+        const selectedMarque = selectMarque.value;
+
+        const equipements = document.querySelectorAll('tr[data-categorie][data-marque]');
+
+        equipements.forEach((equipement) => {
+            const categorie = equipement.getAttribute('data-categorie');
+            const marque = equipement.getAttribute('data-marque');
+
+            const categorieMatch = selectedCategorie === '' || categorie === selectedCategorie;
+            const marqueMatch = selectedMarque === '' || marque === selectedMarque;
+
+            if (categorieMatch && marqueMatch) {
+                equipement.style.display = 'table-row';
+            } else {
+                equipement.style.display = 'none';
+            }
+        });
+    }
+
+    const selectCategorie = document.getElementById('categorie');
+    selectCategorie.addEventListener('change', filtrerEquipements);
+
+    const selectMarque = document.getElementById('marque');
+    selectMarque.addEventListener('change', filtrerEquipements);
+</script>
+
+<style>
+    body {
+        background-color: #E4E9F7; 
+        font-family: Arial, sans-serif;
+    }
+
+    table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    .container {
+        margin: 20px 300px; 
+    }
+
+    th,
+    td {
+        border: 10px solid #000000; 
+        padding: 10px;
+        text-align: center;
+        background-color: #fff; 
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) td {
+        background-color: #f9f9f9;
+    }
+
+    td span {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    td span.en-panne {
+        color: red;
+        background-color: #fde6e6;
+    }
+
+    td span.fonctionnel {
+        color: green;
+        background-color: #e3fcec;
+    }
+
+    td span.installe {
+        color: blue;
+        background-color: #e4f4fd;
+    }
+
+    .btn {
+        margin-top: 20px;
+    }
+.filter-btn {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-btn:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.active-filter {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+</style>
+
+{% endblock content %}

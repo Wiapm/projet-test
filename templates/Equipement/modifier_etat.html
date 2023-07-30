@@ -1,0 +1,66 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+  <body>
+    <div class="container" style="margin-left: 500px; margin-top: 200px; max-width: 600px; padding: 20px; border-radius: 8px; background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); animation: slide-in 0.5s ease;">
+      <h2 style="font-size: 18px;"><i class="fas fa-cogs" style="margin-right: 10px;"></i> Modifier l'état de l'équipement {{ equipement.Reference }}</h2>
+      <form method="post">
+        {% csrf_token %}
+        <label for="nouvel_etat"><i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i> Nouvel état :</label>
+        <select name="nouvel_etat">
+          <option value="Installé"><i class="fas fa-check" style="margin-right: 5px;"></i> Installé</option>
+          <option value="en panne"><i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> En panne</option>
+          <option value="Fonctionnel"><i class="fas fa-check-circle" style="margin-right: 5px;"></i> Fonctionnel</option>
+        </select>
+        <button type="submit" class="btn-save"><i class="fas fa-save" style="margin-right: 5px;"></i> Modifier</button>
+      </form>
+    </div>
+
+    <style>
+      @keyframes slide-in {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      select,
+      button {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        font-size: 16px;
+        transition: box-shadow 0.3s ease;
+      }
+
+      select:focus,
+      button:focus {
+        outline: none;
+        box-shadow: 0 0 5px #007BFF;
+      }
+
+      .btn-save {
+        background-color: #007BFF;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .btn-save:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </body>
+{% endblock content %}

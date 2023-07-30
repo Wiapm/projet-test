@@ -1,0 +1,7 @@
+{% autoescape off %}  
+Avant de pouvoir profiter pleinement de toutes les fonctionnalités que nous offrons, nous avons besoin de confirmer votre adresse e-mail.
+
+Pour confirmer votre inscription, veuillez cliquer sur le lien ci-dessous :
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}  

@@ -1,0 +1,28 @@
+
+{% extends 'main.html' %}
+{% block content %}
+<body>
+{% if equipements %}
+<ul>
+    {% for equipement in equipements %}
+     
+            <strong>Reference:</strong> {{ equipement.Reference }}<br>
+            <strong>Etat:</strong> {{ equipement.get_Etat_display }}<br>
+            <strong>Date d'Acquisition:</strong> {{ equipement.Date_Acquisition }}<br>
+            <strong>Marque:</strong> {{ equipement.Marque }}<br>
+            <strong>Laboratoire:</strong> {{ equipement.Laboratoire }}<br>
+            <strong> Ville de Laboratoire: </strong> {{ equipement.Laboratoire.Localisation}}
+         
+      
+    {% endfor %}
+</ul>
+{% else %}
+<p>Aucun résultat trouvé pour la recherche.</p>
+{% endif %}</body>
+<style>
+
+    body{
+    margin-left: 300px; 
+    margin-top: 20px;}
+       </style>
+{% endblock content %}

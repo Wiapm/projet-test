@@ -1,0 +1,102 @@
+{% extends 'main.html' %}
+{% block content %}
+<!-- Inclure les liens vers les fichiers CSS de Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<!-- Votre code HTML pour le formulaire d'importation de fichier CSV -->
+<form method="post" action="{% url 'import_csv' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <label for="csv_file">Choisir un fichier CSV à importer :</label>
+        <input type="file" id="csv_file" name="csv_file" style="display: none;">
+        <label for="csv_file" class="btn btn-secondary"><i class="fas fa-file-upload"></i> Choisir un fichier</label>
+       <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> Importer</button>
+ </div>
+</form>
+{% if messages %}
+    <div class="messages-container">
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+<!-- Inclure les liens vers les fichiers JavaScript de Font Awesome -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+<style>
+    /* Ajoutez du style personnalisé ici */
+    body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+    }
+    
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 100px;
+    }
+    
+    label {
+        font-weight: bold;
+    }
+    
+    input[type="file"] {
+        display: none;
+    }
+    
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        cursor: pointer;
+    }
+        /* Custom style for error messages */
+        .messages-container {
+        max-width: 400px;
+        margin: 10px auto;
+        padding: 10px;
+        background-color: #f8d7da; /* Light red background color for error messages */
+        border-color: #f5c6cb; /* Border color for error messages */
+        color: #721c24; /* Text color for error messages */
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .messages li {
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .error {
+        color: #721c24; /* Text color for error messages */
+    }
+    
+    .info {
+        color: #0056b3; /* Text color for info messages */
+    }
+    
+    .success {
+        color: #155724; /* Text color for success messages */
+    }
+    
+    .warning {
+        color: #856404; /* Text color for warning messages */
+    }
+ 
+</style>
+{% endblock content%}

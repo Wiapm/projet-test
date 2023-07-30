@@ -1,0 +1,187 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+/* Main styles for the dashboard */
+.dashboard {
+  padding: 20px;
+}
+
+.top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.dash-content {
+  border-radius: 8px;
+  padding: 20px;
+  margin-left: 250px;
+  margin-right: 90px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.boxes {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.box {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 20px; /* Reduced padding */
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-basis: calc(33.33% - 20px); /* Set to 33.33% to fit three boxes in a row */
+  transition: transform 0.2s;
+  cursor: pointer; /* Added cursor pointer on hover */
+}
+
+.box:hover {
+  transform: scale(1.1); /* Increased the scale on hover */
+}
+
+.box span {
+  display: block;
+  margin-top: 10px;
+}
+
+.activity {
+  margin-top: 40px;
+}
+
+.activity-data {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.data {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.data-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Custom styles for icons */
+.bxs-eyedropper {
+  font-size: 32px;
+  margin-right: 10px;
+  color: #06aaf5;
+}
+
+.icon-lab {
+  font-size: 32px;
+  margin-right: 10px;
+  color: #06aaf5;
+}
+
+.fa-clock-rotate-left {
+  font-size: 27px;
+  margin-right: 10px;
+  color: #0e0f0f;
+}
+
+/* Table styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}
+.fa-users{
+  font-size: 32px;
+  margin-right: 10px;
+  color: #06aaf5;
+}
+
+.bxs-eyedropper {
+  font-size: 32px;
+  margin-right: 10px;
+  color: #06aaf5;
+}
+.bxs-dashboard {
+  font-size: 32px;
+  margin-right: 10px;
+  color: #0e0f0f;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f0f0f0;
+}
+
+</style>
+
+<div class="top">
+  <i class="bx bx-menu sidebar-toggle"></i>
+</div>
+<div class="dash-content">
+  <div class="overview">
+    <div class="title">
+      <i class="bx bxs-dashboard"></i>
+      <span class="text">Tableau de bord</span>
+    </div>
+    <div class="boxes">
+      <div class="box box1">
+        <i class='bx bxs-eyedropper'></i>
+        <span class="text">Équipements</span>
+        <span class="number">{{ total_equipements }}</span>
+      </div>
+      <div class="box box2">
+        <i class="fas fa-flask icon-lab"></i> 
+        <span class="text">Total des laboratoires scientifiques</span>
+        <span class="number">{{ total_laboratoires }}</span>
+      </div>
+      <div class="box box2">
+        <i class="fa-solid fa-users"></i>
+        <span class="text">Total des visiteurs</span>
+        <span class="number">{{total_visiteurs}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="activity">
+    <div class="title">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span class="text">Les trois derniers équipements ajoutés</span>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Identifiant</th>
+          <th>Nom d'équipement</th>
+          <th>Date d'acquisition</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for equipement in derniers_equipements %}
+        <tr>
+          <td>{{ equipement.Reference }}</td>
+          <td>{{ equipement.Marque }}</td>
+          <td>{{ equipement.Date_Acquisition }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+{% endblock content%}

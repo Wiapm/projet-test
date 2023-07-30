@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  {% load static %}
+  <link rel="icon" type="image/png" href="{% static 'images/cnrst_logo.png' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      display: flex;
+      align-items: center;
+      max-width: 600px;
+      width: 80%; 
+      margin: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: width 0.3s ease; 
+    }
+    .container:hover {
+      width: 90%; 
+    }
+    .image-container {
+      flex: 1;
+      text-align: center;
+    }
+    p {
+      margin: 10px 0; 
+    }
+    .image {
+      max-width: 100%;
+      height: auto;
+      animation: slide-in 2s;
+    }
+    .form-container {
+      flex: 1;
+      padding: 20px;
+      animation: slide-in 2s;
+    }
+    h2 {
+      text-align: left;
+      color: #007BFF;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: bold;
+    }
+    input {
+      padding: 14px; 
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    small {
+      color: #888;
+      font-size: 14px;
+    }
+    button[type="submit"] {
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007BFF;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+	.fa-user{
+    margin-bottom: 5px;
+	margin-top: 2px;
+	}
+	.fa-key{
+	margin-bottom: 5px;
+	margin-top: 5px;
+	}
+    .icon {
+      margin-right: 10px;
+    }
+    .icon-container {
+      margin-right: 10px; 
+    }
+	.error-message {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .signup-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .signup-link a {
+      color: #007BFF;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+    @keyframes slide-in {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="image-container">
+      <img class="image" src="{% static 'images/cnrst_logo.png' %}" alt="Image">
+    </div>
+    <div class="form-container">
+      <h2>Se connecter</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <div class="input-group-append icon-container">
+            <span class="input-group-text icon"><i class="fas fa-user"></i></span>
+          </div>
+          <input type="text" name="username" placeholder="Nom d'utilisateur..." class="form-control input_user">
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-append icon-container">
+            <span class="input-group-text icon"><i class="fas fa-key"></i></span>
+          </div>
+          <input type="password" name="password" placeholder="Mot de passe..." class="form-control input_pass">
+        </div>
+
+        <div class="d-flex justify-content-center mt-3 login_container">
+          <button type="submit"><i class="icon fas fa-check-circle"></i>Connexion</button>
+        </div>
+     
+	  {% for message in messages %}
+		  <div class="error-message">{{ message }}</div>
+		{% endfor %}
+		
+		<!-- Signup link inside the form-container -->
+		<div class="signup-link">
+		  <a href="{% url 'inscription' %}">Vous n'avez pas de compte? Inscrivez-vous ici</a>
+		</div>
+		 </form>
+	  
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+    Gestion des équipements scientifiques
+</title>
+  <!-- Spécifiez l'image de votre logo ici -->
+  <link rel="icon" type="image/png" href="{% static 'images/cnrst_logo.png' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.9/css/boxicons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+  <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
+  <!-- Inclure Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Link to Remix Icon CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/uil@3.2.0/css/uil.min.css" rel="stylesheet">
+    <!-- CSS only --> 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+   
+{% include 'base/navbar.html' %}
+{% block content %}
+{% endblock content%}
+</body>
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+body {
+    padding-bottom: 80px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-left: 400px;
+    padding: 5px 0;
+    background-color: #E4E9F7; 
+    border-top: 1px solid #ddd; 
+}
+
+.footer p {
+        font-weight: bold; 
+        font-family: Arial, sans-serif; 
+        font-size: 16px; 
+    }
+</style>
+
+<footer class="footer text-dark">
+    <div class="container py-3">
+        <p class="mb-0">Gestion des équipements dans CNRST &copy; {{ year }}</p>
+    </div>
+</footer>
+
+   <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+   <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+</html>
