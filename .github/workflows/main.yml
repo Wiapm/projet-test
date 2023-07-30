@@ -1,28 +1,22 @@
 name: Python_Django application
 
-on: [push]
+on:
+  push:
+    branches:
+      - main  # You can modify this to match the branch you want to trigger the workflow for
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-     
     steps:
       - uses: actions/checkout@v2
 
       - name: Set up Python 3.8
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
           python-version: 3.8
-          
-      - name: Clean up previous environment
-        run: |
-           rm -rf venv
-           
-        # First you need to install a chromium browser in your runner
-      - name: Install Chromium
-        run: sudo apt-get install chromium-browser
-          
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -30,10 +24,18 @@ jobs:
           pip install Django-filter
           pip install Django-auditlog
           pip install selenium
-          python -m venv venv 
-          source venv/bin/activate 
-         
-      - name: Test 
+          python -m venv venv
+          source venv/bin/activate
+
+      # Install necessary packages for headless browser support
+      - name: Install required packages for headless browser
+        run: sudo apt-get install -y xvfb
+
+      - name: Test
         run: |
+          # Start Xvfb
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1920x1080x16 &
+
+          # Run the test script
           python test.py
-   
