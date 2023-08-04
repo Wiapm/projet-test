@@ -66,7 +66,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_27BD40B625464CA0B5F0C1A39B4C9BDD }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
