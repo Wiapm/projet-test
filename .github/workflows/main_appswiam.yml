@@ -1,54 +1,21 @@
-name: Python Django Application CI/CD
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
+
+name: Build and deploy Python app to Azure Web App - appswiam
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install Django
-          pip install Django-filter
-          pip install Django-auditlog
-          pip install selenium
-          python -m venv venv
-          source venv/bin/activate
-
-      - name: Install required packages for headless browser
-        run: sudo apt-get install -y xvfb
-
-      - name: Run Tests
-        run: |
-          # Start Xvfb
-          export DISPLAY=:99
-          Xvfb :99 -screen 0 1920x1080x16 &
-          # Run the test script
-          python test.py  # Replace this with your actual test command
-
-  deploy-to-azure:
-    runs-on: ubuntu-latest
-    needs: build-and-test
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set up Python version
         uses: actions/setup-python@v1
@@ -59,21 +26,38 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-
+      
       - name: Install dependencies
-        run: |
-          pip install Django  # Install your required Django packages here
+        run: pip install -r requirements.txt
+        
+      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      
+      - name: Upload artifact for deployment jobs
+        uses: actions/upload-artifact@v2
+        with:
+          name: python-app
+          path: |
+            . 
+            !venv/
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
           name: python-app
           path: .
-
-      - name: Deploy to Azure Web App
+          
+      - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'appswiam'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_0a1c19e274384d0da11983e8ac285b5c }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_27bd40b625464ca0b5f0c1a39b4c9bdd }}
