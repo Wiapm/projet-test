@@ -66,7 +66,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AzureAppService_PublishProfile_27bd40b625464ca0b5f0c1a39b4c9bdd }}
+          creds: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_27BD40B625464CA0B5F0C1A39B4C9BDD }}
           args: --debug
 
       - name: Download artifact from build job
