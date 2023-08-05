@@ -34,6 +34,9 @@ jobs:
       - name: Install required packages for headless browser
         run: sudo apt-get install -y xvfb
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
       - name: Run Tests
         run: |
           # Start Xvfb
@@ -58,16 +61,14 @@ jobs:
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
     steps:
-     
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
           name: python-app
           path: .
       - name: Check Azure CLI Installation
-        run: az --upgrade
+        run: az --version
 
       - name: Azure Login
         uses: azure/login@v1
